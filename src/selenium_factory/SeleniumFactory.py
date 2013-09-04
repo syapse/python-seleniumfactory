@@ -164,7 +164,10 @@ class SeleniumFactory:
                 else:
                     desired_capabilities['platform'] = parse.getOS()
 
-            desired_capabilities['name'] = parse.getJobName()
+            if 'JOB_NAME' in os.environ:
+                desired_capabilities['name'] = os.environ['JOB_NAME']
+            else:
+                desired_capabilities['name'] = parse.getJobName()
 
             command_executor = "http://%s:%s@%s:%s/wd/hub" % (parse.getUserName(), parse.getAccessKey(
             ), os.environ['SELENIUM_HOST'], os.environ['SELENIUM_PORT'])
