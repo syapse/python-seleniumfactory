@@ -118,7 +118,7 @@ class SeleniumFactory:
             driver.start()
             return driver
 
-    def createWebDriver(self):
+    def createWebDriver(self, show_session_id=True):
         """
          Uses a driver specified by the 'SELENIUM_DRIVER' system property or the environment variable,
          and run the test against the domain specified in 'SELENIUM_STARTING_URL' system property or the environment variable.
@@ -164,10 +164,7 @@ class SeleniumFactory:
                 else:
                     desired_capabilities['platform'] = parse.getOS()
 
-            if 'JOB_NAME' in os.environ:
-                desired_capabilities['name'] = os.environ['JOB_NAME']
-            else:
-                desired_capabilities['name'] = parse.getJobName()
+            desired_capabilities['name'] = parse.getJobName()
 
             command_executor = "http://%s:%s@%s:%s/wd/hub" % (parse.getUserName(), parse.getAccessKey(
             ), os.environ['SELENIUM_HOST'], os.environ['SELENIUM_PORT'])
@@ -190,10 +187,10 @@ class SeleniumFactory:
                     desired_capabilities["disable-popup-handler"] = True
 
             driver = webdriver.Remote(desired_capabilities=desired_capabilities, command_executor=command_executor)
+
             driver.get(startingUrl)
             wrapper = Wrapper(driver, parse)
-            wrapper.dump_session_id()
-            return wrapper
-
+            if show_session_id:
+                wrapper.dump_session_id()
         else:
             return webdriver.Firefox()
