@@ -1,9 +1,7 @@
-from selenium import webdriver
-import unittest, time, re
-import os
+import unittest
 
-from ParseSauceURL import *
-from SeleniumFactory import *
+from selenium_factory.ParseSauceURL import *
+from selenium_factory.SeleniumFactory import *
 
 class testParseSauceURL(unittest.TestCase):
 	def setUp(self):

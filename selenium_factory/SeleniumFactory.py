@@ -1,11 +1,13 @@
 import os
-from selenium import webdriver
-from selenium import selenium
 import hashlib
 import hmac
 
+from selenium import webdriver
+from selenium import selenium
+
 from ParseSauceURL import *
-from SauceRest import *
+from selenium_factory.SauceRest import *
+
 
 """
 This class wraps a webdriver/selenium instance.  It delegates most method calls to the underlying webdriver/selenium

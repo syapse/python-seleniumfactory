@@ -1,10 +1,8 @@
-from selenium import webdriver
-import unittest, time, re
+import unittest
 import os
 import json
 
-from ParseSauceURL import *
-from SeleniumFactory import *
+from selenium_factory.SeleniumFactory import *
 
 """
 """

@@ -1,0 +1,12 @@
+from distutils.core import setup
+
+setup(
+    name='SeleniumFactory-for-Python',
+    version='0.2',
+    packages=[''],
+    url='https://github.com/mattfair/SeleniumFactory-for-Python',
+    license='',
+    author='Matt Fair',
+    author_email='matt.fair@gmail.com',
+    description='Simple interface factory to create Selenium objects to run at SauceLabs'
+)
