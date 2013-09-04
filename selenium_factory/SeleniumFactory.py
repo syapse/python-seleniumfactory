@@ -1,3 +1,11 @@
+"""
+This class wraps a webdriver/selenium instance.  It delegates most method calls to the underlying webdriver/selenium
+instance, and provides some helper methods to set the build number and job status using the Sauce REST API.
+
+It also outputs the Sauce Session ID, which will be parsed by the Jenkins/Bamboo plugins so as to associate the CI build with
+the Sauce job.
+"""
+
 import os
 import hashlib
 import hmac
@@ -7,15 +15,6 @@ from selenium import selenium
 
 from ParseSauceURL import *
 from selenium_factory.SauceRest import *
-
-
-"""
-This class wraps a webdriver/selenium instance.  It delegates most method calls to the underlying webdriver/selenium
-instance, and provides some helper methods to set the build number and job status using the Sauce REST API.
-
-It also outputs the Sauce Session ID, which will be parsed by the Jenkins/Bamboo plugins so as to associate the CI build with
-the Sauce job.
-"""
 
 
 class Wrapper:
@@ -71,33 +70,33 @@ class Wrapper:
         return setattr(self.selenium, attr, value)
 
 
-"""
-  Simple interface factory to create Selenium objects, inspired by the SeleniumFactory interface 
-  from https://github.com/infradna/selenium-client-factory for Java.
- 
-  <p>
-  Compared to directly initializing {@link com.thoughtworks.selenium.DefaultSelenium}, this additional indirection
-  allows the build script or a CI server to control how you connect to the selenium.
-  This makes it easier to run the same set of tests in different environments without
-  modifying the test code.
- 
-  <p>
-  This is analogous to how you connect to JDBC &mdash; you normally don't directly
-  instantiate a specific driver, and instead you do {@link DriverManager#getConnection(String)}.
-"""
-
-
 class SeleniumFactory:
+    """
+      Simple interface factory to create Selenium objects, inspired by the SeleniumFactory interface
+      from https://github.com/infradna/selenium-client-factory for Java.
+
+      <p>
+      Compared to directly initializing {@link com.thoughtworks.selenium.DefaultSelenium}, this additional indirection
+      allows the build script or a CI server to control how you connect to the selenium.
+      This makes it easier to run the same set of tests in different environments without
+      modifying the test code.
+
+      <p>
+      This is analogous to how you connect to JDBC &mdash; you normally don't directly
+      instantiate a specific driver, and instead you do {@link DriverManager#getConnection(String)}.
+    """
+
     def __init__(self):
         pass
 
-    """
-     Uses a driver specified by the 'SELENIUM_DRIVER' environment variable,
-     and run the test against the domain specified in 'SELENIUM_URL' system property or the environment variable.
-     If no variables exist, a local Selenium driver is created.
-    """
 
     def create(self):
+        """
+         Uses a driver specified by the 'SELENIUM_DRIVER' environment variable,
+         and run the test against the domain specified in 'SELENIUM_URL' system property or the environment variable.
+         If no variables exist, a local Selenium driver is created.
+        """
+
         if 'SELENIUM_STARTING_URL' not in os.environ:
             startingUrl = "http://saucelabs.com"
         else:
@@ -119,13 +118,13 @@ class SeleniumFactory:
             driver.start()
             return driver
 
-    """
-     Uses a driver specified by the 'SELENIUM_DRIVER' system property or the environment variable,
-     and run the test against the domain specified in 'SELENIUM_STARTING_URL' system property or the environment variable.
-     If no variables exist, a local Selenium web driver is created.
-    """
-
     def createWebDriver(self):
+        """
+         Uses a driver specified by the 'SELENIUM_DRIVER' system property or the environment variable,
+         and run the test against the domain specified in 'SELENIUM_STARTING_URL' system property or the environment variable.
+         If no variables exist, a local Selenium web driver is created.
+        """
+
         if 'SELENIUM_STARTING_URL' not in os.environ:
             startingUrl = "http://saucelabs.com"
         else:

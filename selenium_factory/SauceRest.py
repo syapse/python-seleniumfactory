@@ -1,12 +1,12 @@
+"""
+This class provides several helper methods to invoke the Sauce REST API.
+"""
+
 import urllib2
 import json
 import base64
 
 url = 'https://saucelabs.com/rest/%s/%s/%s'
-
-"""
-This class provides several helper methods to invoke the Sauce REST API.
-"""
 
 
 class SauceRest:
@@ -17,20 +17,19 @@ class SauceRest:
     def buildUrl(self, version, suffix):
         return url % (version, self.user, suffix)
 
-    """
-    Updates a Sauce Job with the data contained in the attributes dict
-    """
 
     def update(self, job_id, attributes):
+        """
+        Updates a Sauce Job with the data contained in the attributes dict
+        """
         url = self.buildUrl("v1", "jobs/" + job_id)
         data = json.dumps(attributes)
         return self.invokePut(url, self.user, self.key, data)
 
-    """
-    Retrieves the details for a Sauce job in JSON format
-    """
-
     def get(self, job_id):
+        """
+        Retrieves the details for a Sauce job in JSON format
+        """
         url = self.buildUrl("v1", "jobs/" + job_id)
         return self.invokeGet(url, self.user, self.key)
 

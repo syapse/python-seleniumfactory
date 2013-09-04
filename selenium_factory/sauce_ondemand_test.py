@@ -11,7 +11,7 @@ class testSauceWrappers(unittest.TestCase):
 
     def setUp(self):
         self.url = "sauce-ondemand:?username=%s&access-key=%s&job-name=simple test&os=Linux&browser=firefox&browser-version=7&firefox-profile-url=&idle-timeout=90&user-extensions-url=" % (
-        self.username, self.access_key)
+            self.username, self.access_key)
         os.environ["SELENIUM_DRIVER"] = self.url
         os.environ["SELENIUM_PORT"] = "80"
         os.environ["SELENIUM_HOST"] = "ondemand.saucelabs.com"
