@@ -169,6 +169,11 @@ class SeleniumFactory:
             if parse.getIdleTimeout() != 0:
                 desired_capabilities['idle-timeout'] = parse.getIdleTimeout()
 
+            if 'SELENIUM_DISABLE_POPUP_HANDLER' in os.environ:
+                disable_popup_handler_flag = os.environ['SELENIUM_DISABLE_POPUP_HANDLER']
+                if disable_popup_handler_flag.lower()=='true' or disable_popup_handler_flag=='1':
+                    desired_capabilities["disable-popup-handler"] = True
+
             driver=webdriver.Remote(desired_capabilities=desired_capabilities, command_executor=command_executor)
             driver.get(startingUrl)
             wrapper = Wrapper(driver, parse)
