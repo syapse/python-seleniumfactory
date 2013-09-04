@@ -195,5 +195,6 @@ class SeleniumFactory:
             wrapper = Wrapper(driver, parse)
             if show_session_id:
                 wrapper.dump_session_id()
+            return wrapper
         else:
             return webdriver.Firefox()
