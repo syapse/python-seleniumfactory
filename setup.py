@@ -8,5 +8,5 @@ setup(
     license='',
     author='Matt Fair',
     author_email='matt.fair@gmail.com',
-    description='Simple interface factory to create Selenium objects to run at SauceLabs'
+    description='Simple interface factory to create Selenium objects to run at SauceLabs', requires=['selenium']
 )

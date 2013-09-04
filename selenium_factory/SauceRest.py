@@ -21,8 +21,8 @@ class SauceRest:
     Updates a Sauce Job with the data contained in the attributes dict
     """
 
-    def update(self, id, attributes):
-        url = self.buildUrl("v1", "jobs/" + id)
+    def update(self, job_id, attributes):
+        url = self.buildUrl("v1", "jobs/" + job_id)
         data = json.dumps(attributes)
         return self.invokePut(url, self.user, self.key, data)
 
@@ -30,8 +30,8 @@ class SauceRest:
     Retrieves the details for a Sauce job in JSON format
     """
 
-    def get(self, id):
-        url = self.buildUrl("v1", "jobs/" + id)
+    def get(self, job_id):
+        url = self.buildUrl("v1", "jobs/" + job_id)
         return self.invokeGet(url, self.user, self.key)
 
     def invokePut(self, theurl, username, password, data):

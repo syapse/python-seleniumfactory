@@ -4,9 +4,6 @@ import json
 
 from selenium_factory.SeleniumFactory import *
 
-"""
-"""
-
 
 class testSauceWrappers(unittest.TestCase):
     username = "rossco_9_9"
