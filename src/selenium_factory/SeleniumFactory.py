@@ -118,7 +118,7 @@ class SeleniumFactory:
             driver.start()
             return driver
 
-    def createWebDriver(self, show_session_id=True):
+    def createWebDriver(self, job_name=None, show_session_id=True):
         """
          Uses a driver specified by the 'SELENIUM_DRIVER' system property or the environment variable,
          and run the test against the domain specified in 'SELENIUM_STARTING_URL' system property or the environment variable.
@@ -164,7 +164,10 @@ class SeleniumFactory:
                 else:
                     desired_capabilities['platform'] = parse.getOS()
 
-            desired_capabilities['name'] = parse.getJobName()
+            if job_name is not None:
+                desired_capabilities['name'] = job_name
+            else:
+                desired_capabilities['name'] = parse.getJobName()
 
             command_executor = "http://%s:%s@%s:%s/wd/hub" % (parse.getUserName(), parse.getAccessKey(
             ), os.environ['SELENIUM_HOST'], os.environ['SELENIUM_PORT'])
