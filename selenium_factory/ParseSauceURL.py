@@ -12,10 +12,7 @@ class ParseSauceURL:
             self.fields[key] = value
 
     def getValue(self, key):
-        if key in self.fields:
-            return self.fields[key]
-        else:
-            return ""
+        return self.fields.get(key, "")
 
     def getUserName(self):
         return self.getValue("username")
