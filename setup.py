@@ -4,6 +4,7 @@ setup(
     name='SeleniumFactory-for-Python',
     version='0.3',
     packages=['selenium_factory'],
+    package_dir={'selenium_factory': 'src/selenium_factory'},
     url='https://github.com/mattfair/SeleniumFactory-for-Python',
     license='',
     author='Matt Fair',
