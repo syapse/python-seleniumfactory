@@ -16,6 +16,8 @@ instance, and provides some helper methods to set the build number and job statu
 It also outputs the Sauce Session ID, which will be parsed by the Jenkins/Bamboo plugins so as to associate the CI build with
 the Sauce job.
 """
+
+
 class Wrapper:
     def __init__(self, selenium, parse):
         self.__dict__['selenium'] = selenium
@@ -68,6 +70,7 @@ class Wrapper:
     def __setattr__(self, attr, value):
         return setattr(self.selenium, attr, value)
 
+
 """
   Simple interface factory to create Selenium objects, inspired by the SeleniumFactory interface 
   from https://github.com/infradna/selenium-client-factory for Java.
@@ -82,6 +85,8 @@ class Wrapper:
   This is analogous to how you connect to JDBC &mdash; you normally don't directly
   instantiate a specific driver, and instead you do {@link DriverManager#getConnection(String)}.
 """
+
+
 class SeleniumFactory:
     def __init__(self):
         pass
@@ -91,13 +96,14 @@ class SeleniumFactory:
      and run the test against the domain specified in 'SELENIUM_URL' system property or the environment variable.
      If no variables exist, a local Selenium driver is created.
     """
+
     def create(self):
         if 'SELENIUM_STARTING_URL' not in os.environ:
             startingUrl = "http://saucelabs.com"
         else:
             startingUrl = os.environ['SELENIUM_STARTING_URL']
 
-        if 'SELENIUM_DRIVER' in os.environ and  'SELENIUM_HOST' in os.environ and 'SELENIUM_PORT' in os.environ:
+        if 'SELENIUM_DRIVER' in os.environ and 'SELENIUM_HOST' in os.environ and 'SELENIUM_PORT' in os.environ:
             parse = ParseSauceURL(os.environ["SELENIUM_DRIVER"])
             driver = selenium(os.environ['SELENIUM_HOST'], os.environ['SELENIUM_PORT'], parse.toJSON(), startingUrl)
             driver.start()
@@ -118,6 +124,7 @@ class SeleniumFactory:
      and run the test against the domain specified in 'SELENIUM_STARTING_URL' system property or the environment variable.
      If no variables exist, a local Selenium web driver is created.
     """
+
     def createWebDriver(self):
         if 'SELENIUM_STARTING_URL' not in os.environ:
             startingUrl = "http://saucelabs.com"
@@ -160,7 +167,7 @@ class SeleniumFactory:
 
             desired_capabilities['name'] = parse.getJobName()
 
-            command_executor="http://%s:%s@%s:%s/wd/hub"%(parse.getUserName(), parse.getAccessKey(
+            command_executor = "http://%s:%s@%s:%s/wd/hub" % (parse.getUserName(), parse.getAccessKey(
             ), os.environ['SELENIUM_HOST'], os.environ['SELENIUM_PORT'])
 
             #make sure the test doesn't run forever if if the test crashes
@@ -173,10 +180,10 @@ class SeleniumFactory:
 
             if 'SELENIUM_DISABLE_POPUP_HANDLER' in os.environ:
                 disable_popup_handler_flag = os.environ['SELENIUM_DISABLE_POPUP_HANDLER']
-                if disable_popup_handler_flag.lower()=='true' or disable_popup_handler_flag=='1':
+                if disable_popup_handler_flag.lower() == 'true' or disable_popup_handler_flag == '1':
                     desired_capabilities["disable-popup-handler"] = True
 
-            driver=webdriver.Remote(desired_capabilities=desired_capabilities, command_executor=command_executor)
+            driver = webdriver.Remote(desired_capabilities=desired_capabilities, command_executor=command_executor)
             driver.get(startingUrl)
             wrapper = Wrapper(driver, parse)
             wrapper.dump_session_id()

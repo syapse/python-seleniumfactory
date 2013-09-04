@@ -1,5 +1,6 @@
 import json
 
+
 class ParseSauceURL:
     def __init__(self, url):
         self.url = url
@@ -7,7 +8,7 @@ class ParseSauceURL:
         self.fields = {}
         fields = self.url.split(':')[1][1:].split('&')
         for field in fields:
-            [key, value] = field.split('=')    
+            [key, value] = field.split('=')
             self.fields[key] = value
 
     def getValue(self, key):
@@ -27,13 +28,13 @@ class ParseSauceURL:
 
     def getOS(self):
         return self.getValue("os")
-    
+
     def getBrowser(self):
         return self.getValue('browser')
 
     def getBrowserVersion(self):
         return self.getValue('browser-version')
-    
+
     def getFirefoxProfileURL(self):
         return self.getValue('firefox-profile-url')
 

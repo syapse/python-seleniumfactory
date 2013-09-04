@@ -7,17 +7,20 @@ url = 'https://saucelabs.com/rest/%s/%s/%s'
 """
 This class provides several helper methods to invoke the Sauce REST API.
 """
+
+
 class SauceRest:
     def __init__(self, user, key):
         self.user = user
         self.key = key
 
     def buildUrl(self, version, suffix):
-        return url %(version, self.user, suffix)
+        return url % (version, self.user, suffix)
 
     """
     Updates a Sauce Job with the data contained in the attributes dict
     """
+
     def update(self, id, attributes):
         url = self.buildUrl("v1", "jobs/" + id)
         data = json.dumps(attributes)
@@ -26,6 +29,7 @@ class SauceRest:
     """
     Retrieves the details for a Sauce job in JSON format
     """
+
     def get(self, id):
         url = self.buildUrl("v1", "jobs/" + id)
         return self.invokeGet(url, self.user, self.key)
