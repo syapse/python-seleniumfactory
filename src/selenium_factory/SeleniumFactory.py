@@ -136,7 +136,7 @@ class SeleniumFactory:
             desired_capabilities = {}
             if parse.getBrowser() == 'android':
                 desired_capabilities = webdriver.DesiredCapabilities.ANDROID
-            elif parse.getBrowser() == 'googlechrome':
+            elif parse.getBrowser() in ['googlechrome', 'chrome']:
                 desired_capabilities = webdriver.DesiredCapabilities.CHROME
             elif parse.getBrowser() == 'firefox':
                 desired_capabilities = webdriver.DesiredCapabilities.FIREFOX
