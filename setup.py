@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='SeleniumFactory-for-Python',
-    version='0.2',
+    version='0.3',
     packages=[''],
     url='https://github.com/mattfair/SeleniumFactory-for-Python',
     license='',
