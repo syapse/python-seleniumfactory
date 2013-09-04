@@ -173,10 +173,14 @@ class SeleniumFactory:
             ), os.environ['SELENIUM_HOST'], os.environ['SELENIUM_PORT'])
 
             #make sure the test doesn't run forever if if the test crashes
+
+            desired_capabilities['max-duration'] = os.environ.get('SELENIUM_MAX_DURATION', 300)
             if parse.getMaxDuration() != 0:
                 desired_capabilities['max-duration'] = parse.getMaxDuration()
-                desired_capabilities['command-timeout'] = parse.getMaxDuration()
 
+            desired_capabilities['command-timeout'] = desired_capabilities['max-duration']
+
+            desired_capabilities['idle-timeout'] = os.environ.get('SELENIUM_IDLE_TIMEOUT', 30)
             if parse.getIdleTimeout() != 0:
                 desired_capabilities['idle-timeout'] = parse.getIdleTimeout()
 
