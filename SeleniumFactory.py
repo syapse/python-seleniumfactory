@@ -1,6 +1,8 @@
 import os
 from selenium import webdriver
 from selenium import selenium
+import hashlib
+import hmac
 
 from ParseSauceURL import *
 from SauceRest import *
@@ -32,6 +34,10 @@ class Wrapper:
         sauceRest = SauceRest(self.username, self.accessKey)
         sauceRest.update(self.id(), {'build': buildNumber})
 
+    def set_tags(self, tags):
+        sauceRest = SauceRest(self.username, self.accessKey)
+        sauceRest.update(self.id(), {'tags': tags})
+
     def job_passed(self):
         sauceRest = SauceRest(self.username, self.accessKey)
         sauceRest.update(self.id(), {'passed': True})
@@ -39,6 +45,19 @@ class Wrapper:
     def job_failed(self):
         sauceRest = SauceRest(self.username, self.accessKey)
         sauceRest.update(self.id(), {'passed': False})
+
+    def get_public_job_link(self):
+        token = hmac.new(
+            "{}:{}".format(self.username, self.accessKey),
+            self.id(),
+            hashlib.md5
+        ).hexdigest()
+
+        return "https://saucelabs.com/jobs/{}?auth={}".format(self.id(), token)
+
+    def get_job_link(self):
+        return "https://saucelabs.com/jobs/{}".format(self.id())
+
 
     # automatic delegation:
     def __getattr__(self, attr):
