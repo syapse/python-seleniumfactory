@@ -17,3 +17,5 @@ Current state of code:
 
 Please note that the code is very new and still being developed.  Please look at the code and make any improvements you feel fit.
 
+Install from github:
+sudo pip install git+https://github.com/smartkiwi/SeleniumFactory-for-Python.git#egg=SeleniumFactory
