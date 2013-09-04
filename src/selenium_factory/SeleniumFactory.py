@@ -191,10 +191,10 @@ class SeleniumFactory:
 
             driver = webdriver.Remote(desired_capabilities=desired_capabilities, command_executor=command_executor)
 
-            driver.get(startingUrl)
             wrapper = Wrapper(driver, parse)
             if show_session_id:
                 wrapper.dump_session_id()
+            wrapper.get(startingUrl)
             return wrapper
         else:
             return webdriver.Firefox()
