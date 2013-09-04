@@ -38,13 +38,13 @@ class ParseSauceURL:
     def getMaxDuration(self):
         try:
             return int(self.getValue('max-duration'))
-        except:
+        except ValueError, _:
             return 0
 
     def getIdleTimeout(self):
         try:
             return int(self.getValue('idle-timeout'))
-        except:
+        except ValueError, _:
             return 0
 
     def getUserExtensionsURL(self):
