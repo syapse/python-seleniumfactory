@@ -130,8 +130,11 @@ class SeleniumFactory:
         else:
             startingUrl = os.environ['SELENIUM_STARTING_URL']
 
-        if 'SELENIUM_DRIVER' in os.environ and 'SELENIUM_HOST' in os.environ and 'SELENIUM_PORT' in os.environ:
+        if 'SELENIUM_DRIVER' in os.environ :
             parse = ParseSauceURL(os.environ["SELENIUM_DRIVER"])
+
+            SELENIUM_HOST = os.environ.get('SELENIUM_HOST','ondemand.saucelabs.com')
+            SELENIUM_PORT = os.environ.get('SELENIUM_PORT','80')
 
             desired_capabilities = {}
             if parse.getBrowser() == 'android':
@@ -170,7 +173,7 @@ class SeleniumFactory:
                 desired_capabilities['name'] = parse.getJobName()
 
             command_executor = "http://%s:%s@%s:%s/wd/hub" % (parse.getUserName(), parse.getAccessKey(
-            ), os.environ['SELENIUM_HOST'], os.environ['SELENIUM_PORT'])
+            ), SELENIUM_HOST, SELENIUM_PORT)
 
             #make sure the test doesn't run forever if if the test crashes
 
