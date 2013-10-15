@@ -183,6 +183,11 @@ class SeleniumFactory:
 
             desired_capabilities['command-timeout'] = desired_capabilities['max-duration']
 
+            if 'SELENIUM_SCREEN_RESOLUTION' in os.environ:
+                desired_capabilities['screen-resolution'] = os.environ['SELENIUM_SCREEN_RESOLUTION']
+            elif parse.getIdleTimeout() != '1024x768':
+                desired_capabilities['screen-resolution'] = parse.getScreenResolution()
+
             desired_capabilities['idle-timeout'] = os.environ.get('SELENIUM_IDLE_TIMEOUT', 30)
             if parse.getIdleTimeout() != 0:
                 desired_capabilities['idle-timeout'] = parse.getIdleTimeout()

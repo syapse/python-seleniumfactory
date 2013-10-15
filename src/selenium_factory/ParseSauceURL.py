@@ -47,6 +47,13 @@ class ParseSauceURL:
         except ValueError, _:
             return 0
 
+    def getScreenResolution(self):
+        try:
+            return int(self.getValue('screen-resolution'))
+        except ValueError, _:
+            return "1024x768"
+
+
     def getUserExtensionsURL(self):
         return self.getValue('user-extensions-url')
 
