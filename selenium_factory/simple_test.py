@@ -6,7 +6,8 @@ from parse_sauce_URL import ParseSauceURL
 from selenium_factory import SeleniumFactory
 
 
-class testParseSauceURL(unittest.TestCase):
+class TestParseSauceURL(unittest.TestCase):
+
     def setUp(self):
         self.url = "sauce-ondemand:?username=foobar&access-key=1234-5678-9102-3456&job-name=simple test&os=Linux&browser=firefox&browser-version=7&firefox-profile-url=&max-duration=300&idle-timeout=90&user-extensions-url="
 
@@ -24,9 +25,9 @@ class testParseSauceURL(unittest.TestCase):
         self.assertEqual("", parse.getUserExtensionsURL())
 
 
-class testSelenium2(unittest.TestCase):
+class TestSelenium2(unittest.TestCase):
     def setUp(self):
-        self.browser = SeleniumFactory().createWebDriver()
+        self.browser = SeleniumFactory().create_web_driver()
 
     def test_get(self):
         self.browser.get("http://amazon.com")
@@ -36,7 +37,7 @@ class testSelenium2(unittest.TestCase):
         self.browser.quit()
 
 
-class testSelenium1(unittest.TestCase):
+class TestSelenium1(unittest.TestCase):
     def setUp(self):
         self.browser = SeleniumFactory().create()
 

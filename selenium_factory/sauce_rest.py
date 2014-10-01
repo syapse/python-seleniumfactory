@@ -16,36 +16,35 @@ class SauceRest:
         self.user = user
         self.key = key
 
-    def buildUrl(self, version, suffix):
+    def build_url(self, version, suffix):
         return url % (version, self.user, suffix)
-
 
     def update(self, job_id, attributes):
         """
         Updates a Sauce Job with the data contained in the attributes dict
         """
-        url = self.buildUrl("v1", "jobs/" + job_id)
+        the_url = self.build_url("v1", "jobs/" + job_id)
         data = json.dumps(attributes)
-        return self.invokePut(url, self.user, self.key, data)
+        return self.invoke_put(the_url, self.user, self.key, data)
 
     def get(self, job_id):
         """
         Retrieves the details for a Sauce job in JSON format
         """
-        url = self.buildUrl("v1", "jobs/" + job_id)
-        return self.invokeGet(url, self.user, self.key)
+        the_url = self.build_url("v1", "jobs/" + job_id)
+        return self.invoke_get(the_url, self.user, self.key)
 
-    def invokePut(self, theurl, username, password, data):
-        request = urllib2.Request(theurl, data, {'content-type': 'application/json'})
+    def invoke_put(self, the_url, username, password, data):
+        request = urllib2.Request(the_url, data, {'content-type': 'application/json'})
         base64string = base64.encodestring('%s:%s' % (username, password))[:-1]
         request.add_header("Authorization", "Basic %s" % base64string)
         request.get_method = lambda: 'PUT'
-        htmlFile = urllib2.urlopen(request)
-        return htmlFile.read()
+        html_file = urllib2.urlopen(request)
+        return html_file.read()
 
-    def invokeGet(self, theurl, username, password):
-        request = urllib2.Request(theurl)
+    def invoke_get(self, the_url, username, password):
+        request = urllib2.Request(the_url)
         base64string = base64.encodestring('%s:%s' % (username, password))[:-1]
         request.add_header("Authorization", "Basic %s" % base64string)
-        htmlFile = urllib2.urlopen(request)
-        return htmlFile.read()
+        html_file = urllib2.urlopen(request)
+        return html_file.read()

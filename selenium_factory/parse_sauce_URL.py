@@ -13,51 +13,50 @@ class ParseSauceURL:
             [key, value] = field.split('=')
             self.fields[key] = value
 
-    def getValue(self, key):
+    def get_value(self, key):
         return self.fields.get(key, "")
 
-    def getUserName(self):
-        return self.getValue("username")
+    def get_user_name(self):
+        return self.get_value("username")
 
-    def getAccessKey(self):
-        return self.getValue("access-key")
+    def get_access_key(self):
+        return self.get_value("access-key")
 
-    def getJobName(self):
-        return self.getValue("job-name")
+    def get_job_name(self):
+        return self.get_value("job-name")
 
-    def getOS(self):
-        return self.getValue("os")
+    def get_os(self):
+        return self.get_value("os")
 
-    def getBrowser(self):
-        return self.getValue('browser')
+    def get_browser(self):
+        return self.get_value('browser')
 
-    def getBrowserVersion(self):
-        return self.getValue('browser-version')
+    def get_browser_version(self):
+        return self.get_value('browser-version')
 
-    def getFirefoxProfileURL(self):
-        return self.getValue('firefox-profile-url')
+    def get_firefox_profile_url(self):
+        return self.get_value('firefox-profile-url')
 
-    def getMaxDuration(self):
+    def get_max_duration(self):
         try:
-            return int(self.getValue('max-duration'))
+            return int(self.get_value('max-duration'))
         except ValueError, _:
             return 0
 
-    def getIdleTimeout(self):
+    def get_idle_timeout(self):
         try:
-            return int(self.getValue('idle-timeout'))
+            return int(self.get_value('idle-timeout'))
         except ValueError, _:
             return 0
 
-    def getScreenResolution(self):
+    def get_screen_resolution(self):
         try:
-            return int(self.getValue('screen-resolution'))
+            return int(self.get_value('screen-resolution'))
         except ValueError, _:
             return "1024x768"
 
+    def get_user_extensions_url(self):
+        return self.get_value('user-extensions-url')
 
-    def getUserExtensionsURL(self):
-        return self.getValue('user-extensions-url')
-
-    def toJSON(self):
+    def to_json(self):
         return json.dumps(self.fields, sort_keys=False)

@@ -35,25 +35,25 @@ class Wrapper:
     def dump_session_id(self):
         print "\rSauceOnDemandSessionID=%s job-name=%s" % (self.id(), self.jobName)
 
-    def set_build_number(self, buildNumber):
-        sauceRest = SauceRest(self.username, self.accessKey)
-        sauceRest.update(self.id(), {'build': buildNumber})
+    def set_build_number(self, build_number):
+        sauce_rest = SauceRest(self.username, self.accessKey)
+        sauce_rest.update(self.id(), {'build': build_number})
 
     def set_tags(self, tags):
-        sauceRest = SauceRest(self.username, self.accessKey)
-        sauceRest.update(self.id(), {'tags': tags})
+        sauce_rest = SauceRest(self.username, self.accessKey)
+        sauce_rest.update(self.id(), {'tags': tags})
 
     def set_custom_data(self, custom_data):
-        sauceRest = SauceRest(self.username, self.accessKey)
-        sauceRest.update(self.id(), {'custom-data': custom_data})
+        sauce_rest = SauceRest(self.username, self.accessKey)
+        sauce_rest.update(self.id(), {'custom-data': custom_data})
 
     def job_passed(self):
-        sauceRest = SauceRest(self.username, self.accessKey)
-        sauceRest.update(self.id(), {'passed': True})
+        sauce_rest = SauceRest(self.username, self.accessKey)
+        sauce_rest.update(self.id(), {'passed': True})
 
     def job_failed(self):
-        sauceRest = SauceRest(self.username, self.accessKey)
-        sauceRest.update(self.id(), {'passed': False})
+        sauce_rest = SauceRest(self.username, self.accessKey)
+        sauce_rest.update(self.id(), {'passed': False})
 
     def get_public_job_link(self):
         token = hmac.new(
@@ -66,7 +66,6 @@ class Wrapper:
 
     def get_job_link(self):
         return "https://saucelabs.com/jobs/{}".format(self.id())
-
 
     # automatic delegation:
     def __getattr__(self, attr):
@@ -95,7 +94,6 @@ class SeleniumFactory:
     def __init__(self):
         pass
 
-
     def create(self):
         """
          Uses a driver specified by the 'SELENIUM_DRIVER' environment variable,
@@ -104,27 +102,31 @@ class SeleniumFactory:
         """
 
         if 'SELENIUM_STARTING_URL' not in os.environ:
-            startingUrl = "http://saucelabs.com"
+            starting_url = "http://saucelabs.com"
         else:
-            startingUrl = os.environ['SELENIUM_STARTING_URL']
+            starting_url = os.environ['SELENIUM_STARTING_URL']
 
-        if 'SELENIUM_DRIVER' in os.environ and 'SELENIUM_HOST' in os.environ and 'SELENIUM_PORT' in os.environ:
+        if 'SELENIUM_DRIVER' in os.environ\
+                and 'SELENIUM_HOST' in os.environ\
+                and 'SELENIUM_PORT' in os.environ:
             parse = ParseSauceURL(os.environ["SELENIUM_DRIVER"])
-            driver = selenium(os.environ['SELENIUM_HOST'], os.environ['SELENIUM_PORT'], parse.toJSON(), startingUrl)
+            driver = selenium(os.environ['SELENIUM_HOST'],
+                              os.environ['SELENIUM_PORT'],
+                              parse.to_json(), starting_url)
             driver.start()
 
-            if parse.getMaxDuration() != 0:
-                driver.set_timeout(parse.getMaxDuration())
+            if parse.get_max_duration() != 0:
+                driver.set_timeout(parse.get_max_duration())
 
             wrapper = Wrapper(driver, parse)
             wrapper.dump_session_id()
             return wrapper
         else:
-            driver = selenium("localhost", 4444, "*firefox", startingUrl)
+            driver = selenium("localhost", 4444, "*firefox", starting_url)
             driver.start()
             return driver
 
-    def createWebDriver(self, job_name=None, show_session_id=False):
+    def create_web_driver(self, job_name=None, show_session_id=False):
         """
          Uses a driver specified by the 'SELENIUM_DRIVER' system property or the environment variable,
          and run the test against the domain specified in 'SELENIUM_STARTING_URL' system property or the environment variable.
@@ -132,83 +134,116 @@ class SeleniumFactory:
         """
 
         if 'SELENIUM_STARTING_URL' not in os.environ:
-            startingUrl = "http://saucelabs.com"
+            starting_url = "http://saucelabs.com"
         else:
-            startingUrl = os.environ['SELENIUM_STARTING_URL']
+            starting_url = os.environ['SELENIUM_STARTING_URL']
 
-        if 'SELENIUM_DRIVER' in os.environ :
+        if 'SELENIUM_DRIVER' in os.environ:
             parse = ParseSauceURL(os.environ["SELENIUM_DRIVER"])
 
-            SELENIUM_HOST = os.environ.get('SELENIUM_HOST','ondemand.saucelabs.com')
-            SELENIUM_PORT = os.environ.get('SELENIUM_PORT','80')
+            SELENIUM_HOST = os.environ.get('SELENIUM_HOST', 'ondemand.saucelabs.com')
+            SELENIUM_PORT = os.environ.get('SELENIUM_PORT', '80')
 
             desired_capabilities = {}
-            if parse.getBrowser() == 'android':
+            if parse.get_browser() == 'android':
                 desired_capabilities = webdriver.DesiredCapabilities.ANDROID
-            elif parse.getBrowser() in ['googlechrome', 'chrome']:
+            elif parse.get_browser() in ['googlechrome', 'chrome']:
                 desired_capabilities = webdriver.DesiredCapabilities.CHROME
-            elif parse.getBrowser() == 'firefox':
+            elif parse.get_browser() == 'firefox':
                 desired_capabilities = webdriver.DesiredCapabilities.FIREFOX
-            elif parse.getBrowser() == 'htmlunit':
+            elif parse.get_browser() == 'htmlunit':
                 desired_capabilities = webdriver.DesiredCapabilities.HTMLUNIT
-            elif parse.getBrowser() in ['iexplore', 'internet explorer']:
+            elif parse.get_browser() in ['iexplore', 'internet explorer']:
                 desired_capabilities = webdriver.DesiredCapabilities.INTERNETEXPLORER
-            elif parse.getBrowser() == 'iphone':
+            elif parse.get_browser() == 'iphone':
                 desired_capabilities = webdriver.DesiredCapabilities.IPHONE
+            elif parse.get_browser() == 'iPad':
+                desired_capabilities = webdriver.DesiredCapabilities.IPAD
+            elif parse.get_browser() == 'opera':
+                desired_capabilities = webdriver.DesiredCapabilities.OPERA
+            elif parse.get_browser() == 'safari':
+                desired_capabilities = webdriver.DesiredCapabilities.SAFARI
+            elif parse.get_browser() == 'htmlunitjs':
+                desired_capabilities = webdriver.DesiredCapabilities.HTMLUNITWITHJS
+            elif parse.get_browser() == 'phantomjs':
+                desired_capabilities = webdriver.DesiredCapabilities.PHANTOMJS
             else:
                 desired_capabilities = webdriver.DesiredCapabilities.FIREFOX
 
-            desired_capabilities['version'] = parse.getBrowserVersion()
+            desired_capabilities['version'] = parse.get_browser()
 
             if 'SELENIUM_PLATFORM' in os.environ:
                 desired_capabilities['platform'] = os.environ['SELENIUM_PLATFORM']
             else:
             #work around for name issues in Selenium 2
-                if 'Windows 2003' in parse.getOS():
+                if 'Windows 2003' in parse.get_os():
                     desired_capabilities['platform'] = 'XP'
-                elif 'Windows 2008' in parse.getOS():
+                elif 'Windows 2008' in parse.get_os():
                     desired_capabilities['platform'] = 'VISTA'
-                elif 'Linux' in parse.getOS():
+                elif 'Linux' in parse.get_os():
                     desired_capabilities['platform'] = 'LINUX'
                 else:
-                    desired_capabilities['platform'] = parse.getOS()
+                    desired_capabilities['platform'] = parse.get_os()
 
             if job_name is not None:
                 desired_capabilities['name'] = job_name
             else:
-                desired_capabilities['name'] = parse.getJobName()
-
-            command_executor = "http://%s:%s@%s:%s/wd/hub" % (parse.getUserName(), parse.getAccessKey(
-            ), SELENIUM_HOST, SELENIUM_PORT)
+                desired_capabilities['name'] = parse.get_job_name()
 
             #make sure the test doesn't run forever if if the test crashes
 
             desired_capabilities['max-duration'] = os.environ.get('SELENIUM_MAX_DURATION', 300)
-            if parse.getMaxDuration() != 0:
-                desired_capabilities['max-duration'] = parse.getMaxDuration()
+            if parse.get_max_duration() != 0:
+                desired_capabilities['max-duration'] = parse.get_max_duration()
 
             desired_capabilities['command-timeout'] = desired_capabilities['max-duration']
 
             if 'SELENIUM_SCREEN_RESOLUTION' in os.environ:
                 desired_capabilities['screen-resolution'] = os.environ['SELENIUM_SCREEN_RESOLUTION']
-            elif parse.getIdleTimeout() != '1024x768':
-                desired_capabilities['screen-resolution'] = parse.getScreenResolution()
+            elif parse.get_screen_resolution() != '1024x768':
+                desired_capabilities['screen-resolution'] = parse.get_screen_resolution()
 
             desired_capabilities['idle-timeout'] = os.environ.get('SELENIUM_IDLE_TIMEOUT', 30)
-            if parse.getIdleTimeout() != 0:
-                desired_capabilities['idle-timeout'] = parse.getIdleTimeout()
+            if parse.get_idle_timeout() != 0:
+                desired_capabilities['idle-timeout'] = parse.get_idle_timeout()
 
             if 'SELENIUM_DISABLE_POPUP_HANDLER' in os.environ:
                 disable_popup_handler_flag = os.environ['SELENIUM_DISABLE_POPUP_HANDLER']
-                if disable_popup_handler_flag.lower() == 'true' or disable_popup_handler_flag == '1':
+                if disable_popup_handler_flag.lower() == 'true' or\
+                                disable_popup_handler_flag == '1':
                     desired_capabilities["disable-popup-handler"] = True
 
-            driver = webdriver.Remote(desired_capabilities=desired_capabilities, command_executor=command_executor)
+            # additional flags
+            # https://docs.saucelabs.com/reference/test-configuration/
+            # record video option
+            if 'SELENIUM_RECORD_VIDEO' in os.environ:
+                desired_capabilities['record-video'] = os.environ['SELENIUM_RECORD_VIDEO']
+
+            # skip uploading video on passing tests
+            if 'SELENIUM_VIDEO_UPLOAD_ON_PASS' in os.environ:
+                desired_capabilities['video-upload-on-pass'] =\
+                    os.environ['SELENIUM_VIDEO_UPLOAD_ON_PASS']
+            else:
+                desired_capabilities['video-upload-on-pass'] = False
+
+            # capture html source
+            if 'SELENIUM_CAPTURE_HTML' in os.environ:
+                desired_capabilities['capture-html'] = os.environ['SELENIUM_CAPTURE_HTML']
+            else:
+                desired_capabilities['capture-html'] = False
+
+            command_executor = "http://%s:%s@%s:%s/wd/hub" % (parse.get_user_name(),
+                                                              parse.get_access_key(),
+                                                              SELENIUM_HOST,
+                                                              SELENIUM_PORT)
+
+            driver = webdriver.Remote(desired_capabilities=desired_capabilities,
+                                      command_executor=command_executor)
 
             wrapper = Wrapper(driver, parse)
             if show_session_id:
                 wrapper.dump_session_id()
-            wrapper.get(startingUrl)
+            wrapper.get(starting_url)
             return wrapper
         else:
             return webdriver.Firefox()
