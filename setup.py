@@ -35,12 +35,4 @@ Forked from the https://github.com/smartkiwi/SeleniumFactory-for-Python
     entry_points="""
      # -*- Entry points: -*-
      """,
-    classifiers=[
-        'Development Status :: 1 - Prerelease',
-        'Environment :: Web Environment',
-        'Intended Audience :: Developers',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Topic :: Utilities',
-    ],
 )
