@@ -25,12 +25,6 @@ Forked from the https://github.com/smartkiwi/SeleniumFactory-for-Python
     packages=find_packages(),
     install_requires=[
          'selenium',
-         'json',
-         'unittest',
-         'os',
-         'urllib2',
-         'hashlib',
-         'hmac'
          ],
     entry_points="""
      # -*- Entry points: -*-
