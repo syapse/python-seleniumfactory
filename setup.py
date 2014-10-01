@@ -31,4 +31,6 @@ Forked from the https://github.com/smartkiwi/SeleniumFactory-for-Python
     entry_points="""
      # -*- Entry points: -*-
      """,
+    include_package_data=True,
+    zip_safe=True,
 )
