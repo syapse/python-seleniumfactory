@@ -1,3 +1,5 @@
+# Fork from the https://github.com/smartkiwi/SeleniumFactory-for-Python
+
 """
 This class wraps a webdriver/selenium instance.  It delegates most method calls to the underlying webdriver/selenium
 instance, and provides some helper methods to set the build number and job status using the Sauce REST API.
@@ -13,8 +15,8 @@ import hmac
 from selenium import webdriver
 from selenium import selenium
 
-from selenium_factory.ParseSauceURL import *
-from selenium_factory.SauceRest import *
+from parse_sauce_URL import ParseSauceURL
+from sauce_rest import SauceRest
 
 
 class Wrapper:
@@ -40,6 +42,10 @@ class Wrapper:
     def set_tags(self, tags):
         sauceRest = SauceRest(self.username, self.accessKey)
         sauceRest.update(self.id(), {'tags': tags})
+
+    def set_custom_data(self, custom_data):
+        sauceRest = SauceRest(self.username, self.accessKey)
+        sauceRest.update(self.id(), {'custom-data': custom_data})
 
     def job_passed(self):
         sauceRest = SauceRest(self.username, self.accessKey)

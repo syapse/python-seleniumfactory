@@ -1,0 +1,1 @@
+selenium==2.43.0              # Web browser "driver" (ie. library of functions to control a browser)

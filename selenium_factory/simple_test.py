@@ -1,7 +1,9 @@
+# Fork from the https://github.com/smartkiwi/SeleniumFactory-for-Python
+
 import unittest
 
-from selenium_factory.ParseSauceURL import *
-from selenium_factory.SeleniumFactory import *
+from parse_sauce_URL import ParseSauceURL
+from selenium_factory import SeleniumFactory
 
 
 class testParseSauceURL(unittest.TestCase):

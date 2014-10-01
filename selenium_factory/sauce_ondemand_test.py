@@ -1,8 +1,11 @@
+# Fork from the https://github.com/smartkiwi/SeleniumFactory-for-Python
+
 import unittest
 import os
 import json
 
-from selenium_factory.SeleniumFactory import *
+from selenium_factory import SeleniumFactory
+from sauce_rest import SauceRest
 
 
 class testSauceWrappers(unittest.TestCase):
