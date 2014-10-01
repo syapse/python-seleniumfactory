@@ -1,13 +1,46 @@
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(
-    name='SeleniumFactory-for-Python',
-    version='0.3',
-    packages=['selenium_factory'],
-    package_dir={'selenium_factory': 'src/selenium_factory'},
-    url='https://github.com/mattfair/SeleniumFactory-for-Python',
-    license='',
+    name='python-seleniumfactory',
+    version='0.3.1',
+    description="Python SeleniumFactory",
+    long_description="""
+Simple interface factory to create Selenium objects, inspired by
+SeleniumFactory interface from
+https://github.com/infradna/selenium-client-factory.  The main objective is to
+be able to have an automatic interface to easily run tests under the Bamboo
+Sauce Ondemand plugin as well as local tests.  The factory object reads
+environments variables setup by the Bamboo plugin and creates a remote Sauce
+OnDemand session accordingly, otherwise it creates a local selenium
+configuration.
+Forked from the https://github.com/smartkiwi/SeleniumFactory-for-Python
+    """,
     author='Matt Fair',
     author_email='matt.fair@gmail.com',
-    description='Simple interface factory to create Selenium objects to run at SauceLabs', requires=['selenium']
+    maintainer='Erik LaBianca',
+    maintainer_email='erik.labianca@wisertogether.com',
+    url='https://github.com/syapse/python-seleniumfactory',
+    license='Unknown',
+    platforms=['any'],
+    packages=find_packages(),
+    install_requires=[
+         'selenium',
+         'json',
+         'unittest',
+         'os',
+         'urllib2',
+         'hashlib',
+         'hmac'
+         ],
+    entry_points="""
+     # -*- Entry points: -*-
+     """,
+    classifiers=[
+        'Development Status :: 1 - Prerelease',
+        'Environment :: Web Environment',
+        'Intended Audience :: Developers',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Topic :: Utilities',
+    ],
 )
