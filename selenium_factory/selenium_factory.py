@@ -22,9 +22,9 @@ from sauce_rest import SauceRest
 class Wrapper:
     def __init__(self, selenium, parse):
         self.__dict__['selenium'] = selenium
-        self.username = parse.getUserName()
-        self.accessKey = parse.getAccessKey()
-        self.jobName = parse.getJobName()
+        self.username = parse.get_user_name()
+        self.accessKey = parse.get_access_key()
+        self.jobName = parse.get_job_name()
 
     def id(self):
         if hasattr(self.selenium, 'session_id'):
@@ -170,7 +170,7 @@ class SeleniumFactory:
             else:
                 desired_capabilities = webdriver.DesiredCapabilities.FIREFOX
 
-            desired_capabilities['version'] = parse.get_browser()
+            desired_capabilities['version'] = parse.get_browser_version()
 
             if 'SELENIUM_PLATFORM' in os.environ:
                 desired_capabilities['platform'] = os.environ['SELENIUM_PLATFORM']
