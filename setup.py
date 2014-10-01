@@ -1,5 +1,7 @@
 from setuptools import setup, find_packages
 
+from selenium_factory import version
+
 setup(
     name='python-seleniumfactory',
     version=version,
