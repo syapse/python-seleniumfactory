@@ -240,6 +240,15 @@ class SeleniumFactory:
             else:
                 desired_capabilities['tunnel-identifier'] = None
 
+            # support timezone
+            if parse.get_timezone() is not "":
+                desired_capabilities['time-zone'] = parse.get_timezone()
+            else:
+                if os.getenv('SELENIUM_TIMEZONE', None) is not None:
+                    desired_capabilities['time-zone'] = os.environ['SELENIUM_TIMEZONE']
+                else:
+                    desired_capabilities['time-zone'] = 'Pacific'
+
             command_executor = "http://%s:%s@%s:%s/wd/hub" % (parse.get_user_name(),
                                                               parse.get_access_key(),
                                                               SELENIUM_HOST,

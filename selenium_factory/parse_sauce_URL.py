@@ -37,6 +37,9 @@ class ParseSauceURL:
     def get_platform(self):
         return self.get_value('platform')
 
+    def get_timezone(self):
+        return self.get_value('time-zone')
+
     def get_firefox_profile_url(self):
         return self.get_value('firefox-profile-url')
 
