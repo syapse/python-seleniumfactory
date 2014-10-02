@@ -232,6 +232,12 @@ class SeleniumFactory:
             else:
                 desired_capabilities['capture-html'] = False
 
+            # pass test through a specific tunnel
+            if 'SAUCE_TUNNEL_ID' in os.environ:
+                desired_capabilities['tunnel-identifier'] = os.environ['SAUCE_TUNNEL_ID']
+            else:
+                desired_capabilities['tunnel-identifier'] = None
+
             command_executor = "http://%s:%s@%s:%s/wd/hub" % (parse.get_user_name(),
                                                               parse.get_access_key(),
                                                               SELENIUM_HOST,
