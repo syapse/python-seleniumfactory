@@ -172,19 +172,21 @@ class SeleniumFactory:
 
             desired_capabilities['version'] = parse.get_browser_version()
 
-            if 'SELENIUM_PLATFORM' in os.environ:
-                desired_capabilities['platform'] = os.environ['SELENIUM_PLATFORM']
+            if parse.get_platform() is not "":
+                desired_capabilities['platform'] = parse.get_platform()
             else:
-            #work around for name issues in Selenium 2
-                if 'Windows 2003' in parse.get_os():
-                    desired_capabilities['platform'] = 'XP'
-                elif 'Windows 2008' in parse.get_os():
-                    desired_capabilities['platform'] = 'VISTA'
-                elif 'Linux' in parse.get_os():
-                    desired_capabilities['platform'] = 'LINUX'
+                if os.getenv('SELENIUM_PLATFORM', None) is not None:
+                    desired_capabilities['platform'] = os.environ['SELENIUM_PLATFORM']
                 else:
-                    desired_capabilities['platform'] = parse.get_os()
-
+                    #work around for name issues in Selenium 2
+                    if 'Windows 2003' in parse.get_os():
+                        desired_capabilities['platform'] = 'XP'
+                    elif 'Windows 2008' in parse.get_os():
+                        desired_capabilities['platform'] = 'VISTA'
+                    elif 'Linux' in parse.get_os():
+                        desired_capabilities['platform'] = 'LINUX'
+                    else:
+                        desired_capabilities['platform'] = parse.get_os()
             if job_name is not None:
                 desired_capabilities['name'] = job_name
             else:

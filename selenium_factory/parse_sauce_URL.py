@@ -34,6 +34,9 @@ class ParseSauceURL:
     def get_browser_version(self):
         return self.get_value('browser-version')
 
+    def get_platform(self):
+        return self.get_value('platform')
+
     def get_firefox_profile_url(self):
         return self.get_value('firefox-profile-url')
 
