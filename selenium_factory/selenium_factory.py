@@ -20,11 +20,11 @@ from sauce_rest import SauceRest
 
 
 class Wrapper:
-    def __init__(self, selenium, parse):
+    def __init__(self, selenium, parse, job_name=None):
         self.__dict__['selenium'] = selenium
         self.username = parse.get_user_name()
         self.accessKey = parse.get_access_key()
-        self.jobName = parse.get_job_name()
+        self.jobName = job_name if job_name is not None else parse.get_job_name()
 
     def id(self):
         if hasattr(self.selenium, 'session_id'):
@@ -248,7 +248,8 @@ class SeleniumFactory:
             driver = webdriver.Remote(desired_capabilities=desired_capabilities,
                                       command_executor=command_executor)
 
-            wrapper = Wrapper(driver, parse)
+            wrapper = Wrapper(selenium=driver, parse=parse, job_name=job_name)
+
             if show_session_id:
                 wrapper.dump_session_id()
             wrapper.get(starting_url)
