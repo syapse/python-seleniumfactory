@@ -240,6 +240,12 @@ class SeleniumFactory:
             else:
                 desired_capabilities['tunnel-identifier'] = None
 
+            # pass test through a specific tunnel
+            if 'SELENIUM_RECORD_SCREENSHOTS' in os.environ:
+                desired_capabilities['record-screenshots'] = os.environ['SELENIUM_RECORD_SCREENSHOTS']
+            else:
+                desired_capabilities['record-screenshots'] = True
+
             # support timezone
             if parse.get_timezone() is not "":
                 desired_capabilities['time-zone'] = parse.get_timezone()
