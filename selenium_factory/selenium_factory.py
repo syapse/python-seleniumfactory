@@ -255,6 +255,9 @@ class SeleniumFactory:
                 else:
                     desired_capabilities['time-zone'] = 'Pacific'
 
+            if 'SELENIUM_NO_NATIVE_EVENTS' in os.environ:
+                desired_capabilities['nativeEvents'] = False
+
             command_executor = "http://%s:%s@%s:%s/wd/hub" % (parse.get_user_name(),
                                                               parse.get_access_key(),
                                                               SELENIUM_HOST,
